@@ -1,6 +1,6 @@
 
 // 引入axios
-import axios from "axios"
+import axios, {AxiosError} from "axios"
 // 进度条和样式
 import nProgress from "nprogress" // npm install nprogress
 import "nprogress/nprogress.css"
@@ -12,20 +12,22 @@ const install = axios.create({
     timeout:5000
 })
 // 请求拦截
-install.interceptors.request.use(
-    (config)=>{
-        // 开始进度条
-        nProgress.start()
-        // 获取token
-        const token = localStorage.getItem('token')
-        // 请求头携带token
-        config.headers[''] = "Bearer " + token
-        return config
-    },
-    (error)=>{
-        return Promise.reject(error)
-    }
-)
+// install.interceptors.request.use(
+//     (config)=>{
+//         // 开始进度条
+//         nProgress.start()
+//         // 获取token
+//         const token = localStorage.getItem('token')
+//         // 请求头携带token
+//         config.headers[''] = "Bearer " + token
+//         return config
+//     },
+//     (error)=>{
+//         return Promise.reject(error)
+//     }
+// )
+
+
 // 响应拦截
 install.interceptors.response.use(
     (response: any)=>{
@@ -34,7 +36,10 @@ install.interceptors.response.use(
         // 返回响应的数据
         return response
     },
-    (error)=>{
+    (error)  =>{
+        if(!error.response){
+            return
+        }
         // 请求超时处理
         if(error.message.includes('timeout')){
             alert('请求超时')
@@ -65,5 +70,5 @@ install.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-// 导出封装好的aixos
+// 导出封装好的axios
 export default install

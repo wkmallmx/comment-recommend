@@ -1,18 +1,14 @@
 import VideoThumb from '@/public/images/hero-image-01.jpg'
 import ModalVideo from '@/components/modal-video'
 import {get} from "@/app/api/methods";
-import {useEffect, useState} from "react";
-
 export default function Hero() {
-  const [data, setData] = useState([]);
-    useEffect(() => {
-        get({
-        url: '/api'
-        }).then(res => {
-        setData(res.data)
-        })
-    }, [])
+  let data : any = {
+    url: 'http://www.baidu.com',
 
+  }
+  get(data).then((res)=>{
+    console.log(res.data)
+  })
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">

@@ -6,6 +6,7 @@ export const metadata = {
 import Link from 'next/link'
 
 export default function SignIn() {
+
   return (
     <section className="relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
