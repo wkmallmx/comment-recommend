@@ -5,14 +5,12 @@ import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-import PageIllustration from '@/components/page-illustration'
+import PageIllustrationF from '@/components/page-illustration-f'
 import Footer from '@/components/ui/footer'
+import React from "react";
 
-export default function DefaultLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function DefaultLayout({children,}: { children: React.ReactNode })
+{
 
   useEffect(() => {
     AOS.init({
@@ -27,7 +25,7 @@ export default function DefaultLayout({
     <>
       <main className="grow">
 
-        <PageIllustration />
+        <PageIllustrationF />
 
         {children}
 
