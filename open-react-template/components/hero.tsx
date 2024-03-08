@@ -1,14 +1,7 @@
 import VideoThumb from '@/public/images/hero-image-01.jpg'
 import ModalVideo from '@/components/modal-video'
-import {get} from "@/app/api/methods";
-export default function Hero() {
-  let data : any = {
-    url: 'http://www.baidu.com',
 
-  }
-  get(data).then((res)=>{
-    console.log(res.data)
-  })
+export default function Hero() {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">

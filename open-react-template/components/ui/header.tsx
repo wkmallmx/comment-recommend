@@ -1,45 +1,230 @@
+'use client'
 import Link from 'next/link'
+import Image from 'next/image';
 import MobileMenu from './mobile-menu'
+import React, {useState} from 'react';
+import logo from '@/public/images/logo.png'
 
 export default function Header() {
-  return (
-    <header className="absolute w-full z-30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-20">
-          {/* Site branding */}
-          <div className="shrink-0 mr-4">
-            {/* Logo */}
-            <Link href="/" className="block" aria-label="Cruip">
-              <svg className="w-8 h-8 fill-current text-purple-600" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <path d="M31.952 14.751a260.51 260.51 0 00-4.359-4.407C23.932 6.734 20.16 3.182 16.171 0c1.634.017 3.21.28 4.692.751 3.487 3.114 6.846 6.398 10.163 9.737.493 1.346.811 2.776.926 4.262zm-1.388 7.883c-2.496-2.597-5.051-5.12-7.737-7.471-3.706-3.246-10.693-9.81-15.736-7.418-4.552 2.158-4.717 10.543-4.96 16.238A15.926 15.926 0 010 16C0 9.799 3.528 4.421 8.686 1.766c1.82.593 3.593 1.675 5.038 2.587 6.569 4.14 12.29 9.71 17.792 15.57-.237.94-.557 1.846-.952 2.711zm-4.505 5.81a56.161 56.161 0 00-1.007-.823c-2.574-2.054-6.087-4.805-9.394-4.044-3.022.695-4.264 4.267-4.97 7.52a15.945 15.945 0 01-3.665-1.85c.366-3.242.89-6.675 2.405-9.364 2.315-4.107 6.287-3.072 9.613-1.132 3.36 1.96 6.417 4.572 9.313 7.417a16.097 16.097 0 01-2.295 2.275z" />
-              </svg>
-            </Link>
-          </div>
+    const [isOpen_store, setIsOpen_store] = useState(false);
+    const [isOpen_user, setIsOpen_user] = useState(false);
+    const [isOpen_comment, setIsOpen_comment] = useState(false);
+    const [isOpen_score, setIsOpen_score] = useState(false);
+    const [isOpen_checkin, setIsOpen_checkin] = useState(false);
+    const [isOpen_total, setIsOpen_total] = useState(false);
 
-          {/* Desktop navigation */}
-          <nav className="hidden md:flex md:grow">
-            {/* Desktop sign in links */}
-            <ul className="flex grow justify-end flex-wrap items-center">
-              {/*<li>*/}
-              {/*  <Link*/}
-              {/*    href="/signin"*/}
-              {/*    className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"*/}
-              {/*  >*/}
-              {/*    登陆*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
-              <li>
-                <Link href="/signin" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
-                  登陆
-                </Link>
-              </li>
-            </ul>
-          </nav>
+    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, pageId: string) => {
+        e.preventDefault(); // 阻止链接的默认跳转行为
 
-          <MobileMenu />
+        const targetSection = document.getElementById(pageId);
 
-        </div>
-      </div>
-    </header>
-  )
+        if (targetSection) {
+            const topOffset = targetSection.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({top: topOffset, behavior: "smooth"});
+        }
+    };
+
+    return (
+        <header className="absolute w-full z-30">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="flex items-center justify-between h-24">
+                    {/* Site branding */}
+                    <div className="shrink-0 mr-4">
+                        {/* Logo */}
+                        <div className="block mr-4">
+                            <Image
+                                src={logo}
+                                alt="四川大学"
+                                width={56}
+                                height={56}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Desktop navigation */}
+                    <nav className="hidden md:flex md:grow">
+                        {/* Dropdown */}
+                        <div className="relative">
+                            {/* store trigger */}
+                            <button
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                onClick={() => setIsOpen_store(!isOpen_store)}>
+                                商户分析
+                                <svg
+                                    className="w-4 h-4 relative top-1 -mt-2 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            {/* store menu */}
+                            <div
+                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_store ? '' : 'hidden'}`}
+                                aria-labelledby="menu-button">
+                                <div className="py-1">
+                                    <a href="/#store_total" onClick={(e) => scrollToSection(e, 'store_total')}
+                                       className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">商户总览</a>
+                                    <Link href="/#store_distribution" onClick={(e) => scrollToSection(e, 'store_distribution')}
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">商户分布</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            {/* user trigger */}
+                            <button
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                onClick={() => setIsOpen_user(!isOpen_user)}>
+                                用户分析
+                                <svg
+                                    className="w-4 h-4 relative top-1 -mt-2 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            {/* user menu */}
+                            <div
+                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_user ? '' : 'hidden'}`}
+                                aria-labelledby="menu-button">
+                                <div className="py-1">
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">用户总览</Link>
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">用户质量</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            {/* comment trigger */}
+                            <button
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                onClick={() => setIsOpen_comment(!isOpen_comment)}>
+                                评论分析
+                                <svg
+                                    className="w-4 h-4 relative top-1 -mt-2 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            {/* comment menu */}
+                            <div
+                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_comment ? '' : 'hidden'}`}
+                                aria-labelledby="menu-button">
+                                <div className="py-1">
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评论总览</Link>
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评论热词</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            {/* score trigger */}
+                            <button
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                onClick={() => setIsOpen_score(!isOpen_score)}>
+                                评分分析
+                                <svg
+                                    className="w-4 h-4 relative top-1 -mt-2 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            {/* score menu */}
+                            <div
+                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_score ? '' : 'hidden'}`}
+                                aria-labelledby="menu-button">
+                                <div className="py-1">
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评分总览</Link>
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评分分布</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            {/* checkin trigger */}
+                            <button
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                onClick={() => setIsOpen_checkin(!isOpen_checkin)}>
+                                打卡分析
+                                <svg
+                                    className="w-4 h-4 relative top-1 -mt-2 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            {/* checkin menu */}
+                            <div
+                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_checkin ? '' : 'hidden'}`}
+                                aria-labelledby="menu-button">
+                                <div className="py-1">
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">打卡总览</Link>
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">打卡热门</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            {/* total trigger */}
+                            <button
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                onClick={() => setIsOpen_total(!isOpen_total)}>
+                                综合分析
+                                <svg
+                                    className="w-4 h-4 relative top-1 -mt-2 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            {/* total menu */}
+                            <div
+                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_total ? '' : 'hidden'}`}
+                                aria-labelledby="menu-button">
+                                <div className="py-1">
+                                    <Link href="#"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">最佳商户</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Desktop sign in links */}
+                        <ul className="flex grow justify-end flex-wrap items-center">
+                            {/*    <li>
+                                <Link href="/signup"
+                                      className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">
+                                    注册
+                                </Link>
+                            </li> */}
+                            <li>
+                                <Link href="/signin"
+                                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
+                                    登陆
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <MobileMenu/>
+
+                </div>
+            </div>
+        </header>
+    )
 }
