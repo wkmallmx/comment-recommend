@@ -1,5 +1,5 @@
 from flask import Flask
-
+from .core import init_databases
 
 def init_plugs(app: Flask) -> None:
-    pass
+    init_databases(app)
