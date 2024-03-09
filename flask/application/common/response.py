@@ -1,4 +1,4 @@
-from application.common.code import ResponseCode, ResponseMessage
+from .code import ResponseCode, ResponseMessage
 class ResMsg(object):
     """
     封装响应文本

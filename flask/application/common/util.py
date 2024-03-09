@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import jsonify
-from application.common.response import ResMsg
+from .response import ResMsg
 
 def route(bp, *args, **kwargs):
     """

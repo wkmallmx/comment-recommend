@@ -1,26 +1,19 @@
-from flask import Blueprint, Flask
-from application.common.util import route
-from application.models.user import User
-from application.extensions.core import db
-from flask import request
-from application.common.response import ResMsg
-from application.common.code import ResponseCode
+from flask import Blueprint, Flask, request
+from application.common import route, ResMsg, ResponseCode
+from application.models import User
+from application.extensions import db
+
 # 创建蓝图
-bp = Blueprint('login', __name__, url_prefix='/login')
+login_bp = Blueprint('login', __name__, url_prefix='/login')
 
 
-def register_login_bps(app: Flask):
-    # 注册蓝图
-    app.register_blueprint(bp)
-
-
-@route(bp, '/', methods=['GET', 'POST'])
+@route(login_bp, '/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         username = 'admin'
         password = '123456'
     else:
-    # 获取请求参数
+        # 获取请求参数
         username = request.json.get('username')
         password = request.json.get('password')
 

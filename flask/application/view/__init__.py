@@ -1,13 +1,12 @@
-from application.view.test import register_test_bps
-from application.view.login import register_login_bps
-from application.view.register import register_register_bps
-from application.view.chapman import register_chapman_bps
-from application.view.customer import register_customer_bps
+from flask import Flask
+from .test import test_bp
+from .login import login_bp
+from .chapman import register_chapman_bps
+from .customer import register_customer_bps
 
 
-def register_bps(app):
-    register_login_bps(app)
-    register_register_bps(app)
-    register_test_bps(app)
+def register_bps(app: Flask):
+    app.register_blueprint(test_bp)
+    app.register_blueprint(login_bp)
     register_customer_bps(app)
     register_chapman_bps(app)
