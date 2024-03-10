@@ -28,7 +28,6 @@ def login():
         username = 'admin'
         password = '123456'
     if request.method == 'POST':
-
         # 获取请求参数
         username = request.form['username']
         password = request.form['password']
@@ -41,7 +40,7 @@ def login():
     true_password = user.password
 
     # 用户不存在
-    
+
     # 密码错误
     if not true_password == password:
         return {'msg': '密码错误'}, ResponseCode.FAIL
