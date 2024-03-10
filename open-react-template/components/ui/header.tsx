@@ -1,9 +1,21 @@
 'use client'
+
 import Link from 'next/link'
 import Image from 'next/image';
 import MobileMenu from './mobile-menu'
 import React, {useState} from 'react';
 import logo from '@/public/images/logo.png'
+
+export const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, pageId: string) => {
+    e.preventDefault(); // 阻止链接的默认跳转行为
+
+    const targetSection = document.getElementById(pageId);
+
+    if (targetSection) {
+        const topOffset = targetSection.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({top: topOffset, behavior: "smooth"});
+    }
+};
 
 export default function Header() {
     const [isOpen_store, setIsOpen_store] = useState(false);
@@ -13,16 +25,6 @@ export default function Header() {
     const [isOpen_checkin, setIsOpen_checkin] = useState(false);
     const [isOpen_total, setIsOpen_total] = useState(false);
 
-    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, pageId: string) => {
-        e.preventDefault(); // 阻止链接的默认跳转行为
-
-        const targetSection = document.getElementById(pageId);
-
-        if (targetSection) {
-            const topOffset = targetSection.getBoundingClientRect().top + window.pageYOffset;
-            window.scrollTo({top: topOffset, behavior: "smooth"});
-        }
-    };
 
     return (
         <header className="absolute w-full z-30">
@@ -63,10 +65,12 @@ export default function Header() {
                                 className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_store ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
-                                    <a href="/#store_total" onClick={(e) => scrollToSection(e, 'store_total')}
-                                       className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">商户总览</a>
-                                    <Link href="/#store_distribution" onClick={(e) => scrollToSection(e, 'store_distribution')}
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">商户分布</Link>
+                                    <Link href="/store-total"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_store(!isOpen_store)}>商户总览</Link>
+                                    <Link href="/store-distribution"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_store(!isOpen_store)}>商户分布</Link>
                                 </div>
                             </div>
                         </div>
@@ -90,10 +94,12 @@ export default function Header() {
                                 className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_user ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">用户总览</Link>
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">用户质量</Link>
+                                    <Link href="/user-total"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_user(!isOpen_user)}>用户总览</Link>
+                                    <Link href="/user-quality"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_user(!isOpen_user)}> 用户质量 </Link>
                                 </div>
                             </div>
                         </div>
@@ -117,10 +123,12 @@ export default function Header() {
                                 className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_comment ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评论总览</Link>
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评论热词</Link>
+                                    <Link href="/comment-total"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_comment(!isOpen_comment)}>评论总览</Link>
+                                    <Link href="/comment-word"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_comment(!isOpen_comment)}>评论热词</Link>
                                 </div>
                             </div>
                         </div>
@@ -144,10 +152,12 @@ export default function Header() {
                                 className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_score ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评分总览</Link>
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">评分分布</Link>
+                                    <Link href="/score-total"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_score(!isOpen_score)}>评分总览</Link>
+                                    <Link href="/score-distribution"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_score(!isOpen_score)}> 评分分布 </Link>
                                 </div>
                             </div>
                         </div>
@@ -171,10 +181,12 @@ export default function Header() {
                                 className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_checkin ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">打卡总览</Link>
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">打卡热门</Link>
+                                     <Link href="/checkin-total"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_checkin(!isOpen_checkin)}>打卡总览</Link>
+                                     <Link href="/checkin-hot"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_checkin(!isOpen_checkin)}>打卡热门</Link>
                                 </div>
                             </div>
                         </div>
@@ -198,8 +210,9 @@ export default function Header() {
                                 className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_total ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
-                                    <Link href="#"
-                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200">最佳商户</Link>
+                                    <Link href="/total"
+                                          className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
+                                          onClick={() => setIsOpen_total(!isOpen_total)}>最佳商家</Link>
                                 </div>
                             </div>
                         </div>
