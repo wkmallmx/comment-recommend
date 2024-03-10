@@ -111,5 +111,4 @@ __pycache__
 
 .vscode
 
-
-public/yelp_academic_dataset_business.json
+flask/public

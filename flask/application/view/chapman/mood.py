@@ -1,5 +1,5 @@
-from common import route, ResMsg, ResponseCode
-from extensions import sentiment_analysis
+from application.common import route, ResMsg, ResponseCode
+from application.extensions import sentiment_analysis
 from flask import Flask, Blueprint, request
 
 
