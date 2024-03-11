@@ -3,7 +3,6 @@ import ModalVideo from '@/components/modal-video'
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import React from "react";
-import Link from "next/link"
 
 export default function Hero() {
     return (
@@ -40,12 +39,12 @@ export default function Hero() {
                            data-aos-delay="200">小组成员:</p>
                         <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                             <div data-aos="fade-up" data-aos-delay="400">
-                                <Link className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
-                                   href="search">开始使用</Link>
+                                <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
+                                   href="#0">开始使用</a>
                             </div>
                             <div data-aos="fade-up" data-aos-delay="600">
-                                <Link className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                                   href="operation">源码仓库</Link>
+                                <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
+                                   href="#0">源码仓库</a>
                             </div>
                         </div>
                     </div>
