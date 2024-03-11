@@ -13,12 +13,12 @@ def get_mood_analysis():
     :return:
     """
     # 获取前端数据
-    data = request.get_json()
-    bussiness_id = data.get('bussiness_id')
+    data = request.form
+    bussiness_id = data['business_id']
     # 进行情感分析
     sentiment_ma, neg, neu, pos = sentiment_analysis(bussiness_id)
     # 编辑返回消息
     res = ResMsg(code=ResponseCode.SUCCESS,
                  data={'sentiment_ma': sentiment_ma, 'neg': neg, 'neu': neu, 'pos': pos})
     # 返回结果
-    return res
+    return res.data

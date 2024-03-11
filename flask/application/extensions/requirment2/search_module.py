@@ -7,7 +7,6 @@ import math
 
 
 class Search_Recommend_Module():
-
     def __init__(self):
         super().__init__()
         self.model = CLIPTextModelWithProjection.from_pretrained(
@@ -15,7 +14,7 @@ class Search_Recommend_Module():
         self.tokenizer = AutoTokenizer.from_pretrained(
             "openai/clip-vit-base-patch32", cache_dir="public/search")
         self.business_data = pd.read_json(
-            "public/search/yelp_academic_dataset_business.json", lines=True)
+            "public/search/yelp_academic_dataset_business.json", lines=True)  # 改一下路径
         categories = pd.read_excel("public/search/categories.xlsx")
         attributes = pd.read_excel("public/search/attributes.xlsx")  # 把对应文件加上去
         self.attributes = attributes['Attribute'].tolist()
@@ -30,12 +29,10 @@ class Search_Recommend_Module():
         self.categories_embedding = self.categories_embedding.values
         self.categories_embedding = torch.from_numpy(
             self.categories_embedding.T)
-
-    # def cal_distance(self,latitude,longtitude,business_latitude,business_longtitude):
-    #     #print(latitude,business_latitude,longtitude,business_longtitude)
-    #     return math.sqrt((latitude-business_latitude)**2+(longtitude-business_longtitude)**2)
-
+        self.user_embedding = pd.read_json("public/search/user_encodings.json")
+        self.user = pd.read_excel("public/search/user.xlsx")
     # wzy：修改计算距离方法，使用球面距离计算
+
     def cal_distance(self, lat1, lon1, lat2, lon2):
         """
         Calculate the great circle distance between two points
@@ -91,15 +88,15 @@ class Search_Recommend_Module():
             score = self.score(selected_business,
                                attributes_sim, categories_sim, k=i)
             scores.append(score)
-            # print(selected_business["name"][i],score)
+            # print(selected_business["name"][i], score)
         selected_business["score"] = pd.Series(scores)
 
         return selected_business
 
     # 使用信息茧房需要用户embedding，做完推荐系统才能搞这个
-    def search_business(self, latitude, longitude, search_text, user_id=None, limit_distance=None, Info_Cocoons=False):
+    def search_business(self, latitude, longitude, search_text, user_id=None, limit_distance=None, Info_Cocoons=False, is_recommend=False):
         if limit_distance == None:
-            limit_distance = 10
+            limit_distance = 5
         else:
             pass
         distances = []
@@ -113,13 +110,18 @@ class Search_Recommend_Module():
                 distances.append(distance)
         distances = pd.Series(distances)
         res["distance"] = distances
-        inputs = self.tokenizer(search_text, padding=True, return_tensors="pt")
-        outputs = self.model(**inputs)
-        text_embeds = outputs.text_embeds
-        attributes_sim = F.cosine_similarity(text_embeds.unsqueeze(
-            1), self.attributes_embedding.unsqueeze(0), dim=2)
-        categories_sim = F.cosine_similarity(text_embeds.unsqueeze(
-            1), self.categories_embedding.unsqueeze(0), dim=2)
+        if (is_recommend == False):
+            inputs = self.tokenizer(
+                search_text, padding=True, return_tensors="pt")
+            outputs = self.model(**inputs)
+            text_embeds = outputs.text_embeds
+        else:
+            text_embeds = search_text
+
+        attributes_sim = F.cosine_similarity(
+            text_embeds.reshape(-1, 512), self.attributes_embedding.unsqueeze(0), dim=2)
+        categories_sim = F.cosine_similarity(
+            text_embeds.reshape(-1, 512), self.categories_embedding.unsqueeze(0), dim=2)
         attributes_sim_df = pd.DataFrame()
         attributes_sim_df["attribute"] = pd.Series(self.attributes)
         attributes_sim_df["sim"] = pd.Series(
@@ -146,11 +148,51 @@ class Search_Recommend_Module():
             'score', ascending=False)
         return selected_business.head(100)
 
-    def search_user(self, latitude, longtitude, search_text, user_id, limit_distance=None, Info_Cocoons=False):
-        return
+    def search_user(self, latitude, longtitude, search_text, user_id=None, limit_distance=None, Info_Cocoons=False, is_recommend=False):
+        if (is_recommend == False):
+            inputs = self.tokenizer(
+                search_text, padding=True, return_tensors="pt")
+            outputs = self.model(**inputs)
+            text_embeds = outputs.text_embeds
+        else:
+            text_embeds = search_text
+        all_user_embedding = self.user_embedding.values
+        all_user_embedding = torch.from_numpy(all_user_embedding.T)
+        sim = F.cosine_similarity(text_embeds.unsqueeze(
+            1), all_user_embedding.unsqueeze(0), dim=2)
+        user = pd.DataFrame()
+        user["user_id"] = self.user["user_id"]
+        user["sim"] = pd.Series(sim[0].detach().numpy())
+        user = user.sort_values("sim", ascending=False)
+        selected_user = user.head(100)
+        selected_user_id = selected_user["user_id"].tolist()
+        res = self.user[self.user['user_id'].isin(selected_user_id)]
+        return res.head(100)
 
-    def recommend_business(self, latitude, longtitude, user_id, limit_distance=None, Info_Cocoons=False):
-        return
+    def recommend_business(self, latitude, longtitude, user_id=None, limit_distance=None, Info_Cocoons=False):
+        user_embedding = self.user_embedding[user_id].values
+        user_embedding = torch.from_numpy(user_embedding.T)
+        res = self.search_business(latitude, longtitude, search_text=user_embedding, user_id=user_id,
+                                   limit_distance=limit_distance, Info_Cocoons=Info_Cocoons, is_recommend=True)
+        return res.head(100)
 
-    def recommend_user(self, latitude, longtitude, user_id, limit_distance=None, Info_Cocoons=False):
-        return
+    def recommend_user(self, latitude, longtitude, user_id=None, limit_distance=None, Info_Cocoons=False):
+        user_embedding = self.user_embedding[user_id].values
+        user_embedding = torch.from_numpy(user_embedding.T)
+        res = self.search_user(latitude, longtitude, search_text=user_embedding, user_id=user_id,
+                               limit_distance=limit_distance, Info_Cocoons=Info_Cocoons, is_recommend=True)
+        return res.head(100)
+
+
+"""
+需要安装
+pip install torch
+pip install transformers
+pip install thefuzz
+clip_text_encoder运行代码会自动安装
+"""
+"""search_text="search a user"
+search_recommend=Search_Recommend_Module()
+res=search_recommend.search_user(latitude=40,longtitude=-75,search_text=search_text)
+print(res)"""
+search_recommend = Search_Recommend_Module()
