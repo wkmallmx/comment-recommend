@@ -118,10 +118,10 @@ class Search_Recommend_Module():
         else:
             text_embeds = search_text
 
-        attributes_sim = F.cosine_similarity(text_embeds.unsqueeze(
-            1), self.attributes_embedding.unsqueeze(0), dim=2)
-        categories_sim = F.cosine_similarity(text_embeds.unsqueeze(
-            1), self.categories_embedding.unsqueeze(0), dim=2)
+        attributes_sim = F.cosine_similarity(
+            text_embeds.reshape(-1, 512), self.attributes_embedding.unsqueeze(0), dim=2)
+        categories_sim = F.cosine_similarity(
+            text_embeds.reshape(-1, 512), self.categories_embedding.unsqueeze(0), dim=2)
         attributes_sim_df = pd.DataFrame()
         attributes_sim_df["attribute"] = pd.Series(self.attributes)
         attributes_sim_df["sim"] = pd.Series(
@@ -167,21 +167,21 @@ class Search_Recommend_Module():
         selected_user = user.head(100)
         selected_user_id = selected_user["user_id"].tolist()
         res = self.user[self.user['user_id'].isin(selected_user_id)]
-        return res
+        return res.head(100)
 
     def recommend_business(self, latitude, longtitude, user_id=None, limit_distance=None, Info_Cocoons=False):
         user_embedding = self.user_embedding[user_id].values
         user_embedding = torch.from_numpy(user_embedding.T)
         res = self.search_business(latitude, longtitude, search_text=user_embedding, user_id=user_id,
                                    limit_distance=limit_distance, Info_Cocoons=Info_Cocoons, is_recommend=True)
-        return res
+        return res.head(100)
 
     def recommend_user(self, latitude, longtitude, user_id=None, limit_distance=None, Info_Cocoons=False):
         user_embedding = self.user_embedding[user_id].values
         user_embedding = torch.from_numpy(user_embedding.T)
         res = self.search_user(latitude, longtitude, search_text=user_embedding, user_id=user_id,
                                limit_distance=limit_distance, Info_Cocoons=Info_Cocoons, is_recommend=True)
-        return res
+        return res.head(100)
 
 
 """
@@ -195,8 +195,4 @@ clip_text_encoder运行代码会自动安装
 search_recommend=Search_Recommend_Module()
 res=search_recommend.search_user(latitude=40,longtitude=-75,search_text=search_text)
 print(res)"""
-search_recommend = []
-
-
-def init_search_recommend_module():
-    search_recommend = Search_Recommend_Module()
+search_recommend = Search_Recommend_Module()

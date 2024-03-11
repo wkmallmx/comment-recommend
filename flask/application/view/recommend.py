@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, request
 from application.common import route, ResMsg, ResponseCode
 from application.extensions import db
 from application.models import User
-from application.extensions.requirment2.search import Search_Recommend_Module
+from application.extensions.requirment2.search_module import Search_Recommend_Module
 import pandas as pd
 from application.extensions import search_recommend
 
@@ -20,12 +20,12 @@ def recommend_business():
         longitude = user.longitude
         res = search_recommend.recommend_business(
             latitude, longitude, user_id=user.id, limit_distance=10)
-        print(res.columns())
+        print(res.columns)
         res = res.to_json(orient='records')
         response = ResMsg(code=ResponseCode.SUCCESS, data=res)
         return response.data
-    
-    
+
+
 @route(recommend_bp, '/user', methods=['GET', 'POST'])
 def recommend_user():
     if request.method == 'GET':
@@ -37,7 +37,7 @@ def recommend_user():
         longitude = user.longitude
         res = search_recommend.recommend_user(
             latitude, longitude, user_id=user.id, limit_distance=10)
-        print(res.columns())
+        print(res.columns)
         res.to_json(orient='records')
         response = ResMsg(code=ResponseCode.SUCCESS, data=res)
         return response.data
