@@ -6,7 +6,7 @@ class User(db.Model):
     User model
     """
     __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True,
+    id = db.Column(db.String(50), primary_key=True,
                    autoincrement=True, comment='用户ID')
     username = db.Column(db.String(50), unique=True,
                          nullable=False, comment='用户名')
