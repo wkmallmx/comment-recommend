@@ -30,18 +30,14 @@ export default function UserTotal() {
                         {/* 1st item */}
                         <div className="w-full max-w-full mx-auto my-16" data-aos="fade-up" data-aos-delay="200"
                              data-aos-anchor="[data-aos-id-blocks]">
-                            <div className="chart-container">
                                 <Draw_LineChart_1/>
-                            </div>
                             <h4 className="h4 text-center mt-4">用户增量 & 2004-2022</h4>
                         </div>
 
                         {/* 2nd item */}
                         <div className="w-full max-w-full mx-auto my-16" data-aos="fade-up" data-aos-delay="400"
                              data-aos-anchor="[data-aos-id-blocks]">
-                            <div className="chart-container">
                                 <Draw_LineChart_2/>
-                            </div>
                             <h4 className="h4 text-center mt-4">优质用户 & 2006-2021</h4>
                         </div>
                     </div>

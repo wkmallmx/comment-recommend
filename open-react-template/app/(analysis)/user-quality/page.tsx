@@ -30,36 +30,28 @@ export default function UserQuality() {
                         {/* 1st item */}
                         <div className="w-full max-w-full mx-auto my-16" data-aos="fade-up" data-aos-delay="200"
                              data-aos-anchor="[data-aos-id-blocks]">
-                            <div className="chart-container">
                                 <Draw_Bar_1/>
-                            </div>
                             <h4 className="h4 text-center mt-4">评论达人 & TOP20</h4>
                         </div>
 
                         {/* 2nd item */}
                         <div className="w-full max-w-full mx-auto my-16" data-aos="fade-up" data-aos-delay="400"
                              data-aos-anchor="[data-aos-id-blocks]">
-                            <div className="chart-container">
                                 <Draw_Bar_2/>
-                            </div>
                             <h4 className="h4 text-center mt-4">人气最高 & TOP20</h4>
                         </div>
 
                         {/* 3rd item */}
                         <div className="w-full max-w-full mx-auto my-16" data-aos="fade-up" data-aos-delay="600"
                              data-aos-anchor="[data-aos-id-blocks]">
-                            <div className="chart-container">
                                 <Draw_LineChart_3/>
-                            </div>
                             <h4 className="h4 text-center mt-4">优质用户/普通用户 & 2006-2021</h4>
                         </div>
 
                         {/* 4th item */}
                         <div className="w-full max-w-full mx-auto my-16" data-aos="fade-up" data-aos-delay="800"
                              data-aos-anchor="[data-aos-id-blocks]">
-                            <div className="chart-container">
                                 <Draw_LineChart_4/>
-                            </div>
                             <h4 className="h4 text-center mt-4">沉默用户/全部用户 & 2007-2021</h4>
                         </div>
                     </div>

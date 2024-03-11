@@ -174,8 +174,8 @@ export default function Recommend() {
                 </div>
             </div>
             <div className="flex justify-end pr-36 pb-36">
-                <Link href="/home"
-                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700">返回首页</Link>
+                <Link href="/search"
+                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700">返回搜索</Link>
             </div>
         </section>
     )

@@ -30,9 +30,7 @@ export default function Total() {
                         {/* 1st item */}
                         <div className="w-full max-w-full mx-auto my-16" data-aos="fade-up" data-aos-delay="200"
                              data-aos-anchor="[data-aos-id-blocks]">
-                            <div className="chart-container">
                                 <Draw_Pie_1/>
-                            </div>
                             <h4 className="h4 text-center mt-4">城市最佳 & e.g.</h4>
                         </div>
                     </div>
