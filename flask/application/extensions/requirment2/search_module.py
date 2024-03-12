@@ -158,8 +158,8 @@ class Search_Recommend_Module():
             text_embeds = search_text
         all_user_embedding = self.user_embedding.values
         all_user_embedding = torch.from_numpy(all_user_embedding.T)
-        sim = F.cosine_similarity(text_embeds.unsqueeze(
-            1), all_user_embedding.unsqueeze(0), dim=2)
+        sim = F.cosine_similarity(
+            text_embeds.reshape(-1, 512), all_user_embedding.unsqueeze(0), dim=2)
         user = pd.DataFrame()
         user["user_id"] = self.user["user_id"]
         user["sim"] = pd.Series(sim[0].detach().numpy())
