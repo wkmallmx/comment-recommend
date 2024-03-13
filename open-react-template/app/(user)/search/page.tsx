@@ -1,7 +1,8 @@
 'use client'
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
+import {Switch} from 'antd';
 import PageIllustrationF from "@/components/page-illustration-f";
 import PageIllustrationB from "@/components/page-illustration-b";
 import Friends from "@/components/friends";
@@ -11,6 +12,14 @@ export default function Search() {
     useEffect(() => {
         document.title = '用户推荐';
     }, []);
+
+    const [isUserMode, setIsUserMode] = useState(true);
+
+    const linkHref = isUserMode ? '/recommend-user' : '/recommend-store';
+
+    const handleModeChange = (checked: any) => {
+        setIsUserMode(checked);
+    };
 
     return (
         <section>
@@ -39,26 +48,37 @@ export default function Search() {
                     <div className="relative flex flex-col lg:flex-row justify-between items-center">
 
                         {/* CTA content */}
-                        <div className="mb-6 lg:mr-16 lg:mb-0 text-center lg:text-left lg:w-1/2">
-                            <h3 className="h3 text-white mb-2">智能推荐</h3>
-                            <p className="text-purple-200 text-lg">键入关键词以获得推荐结果。</p>
+                        <div className="mb-6 lg:mr-16 lg:mb-0 text-center lg:text-left lg:w-1/3">
+                            <div className="flex flex-row">
+                                <h3 className="h3 text-white mb-2">智能推荐</h3>
+                                {/* Switch */}
+                                <div className="ml-4 mt-2">
+                                    <Switch className="form-switch" checkedChildren="用户" unCheckedChildren="商家"
+                                            defaultChecked
+                                            onChange={handleModeChange}/>
+                                </div>
+                            </div>
+                            <p className="text-purple-200 text-lg">键入关键词以获得推荐结果♡</p>
                         </div>
 
+
                         {/* CTA form */}
-                        <form className="w-full lg:w-1/2 text-center">
+                        <form className="w-full lg:w-2/3 text-center">
                             <div
                                 className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:max-w-none">
                                 <input type="email"
                                        className="w-full appearance-none bg-purple-700 border border-purple-500 focus:border-purple-300 rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-purple-400"
                                        placeholder="关键词…" aria-label="关键词…"/>
-                                <Link href="/recommend"
+                                <Link href={linkHref}
                                       className="w-1/6 btn-sm text-purple-600 bg-purple-100 hover:bg-white shadow">搜索</Link>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            {/* Friends list */}
+
+            {/* Friends list */
+            }
             <Friends/>
             <InterestedStores/>
             <div className="flex justify-end mr-36 mb-36">

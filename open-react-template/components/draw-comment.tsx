@@ -72,7 +72,7 @@ const df_4 = [
     {"word": "go back", "cnt": 7991},
     {"word": "first time", "cnt": 6977},
     {"word": "customer service", "cnt": 6203},
-    {"word": "highly recommend", "cnt": 6178},
+    {"word": "highly recommend-user", "cnt": 6178},
     {"word": "really good", "cnt": 5734},
     {"word": "come back", "cnt": 5723},
     {"word": "food good", "cnt": 5192},
@@ -92,7 +92,7 @@ const df_4 = [
 ]
 
 const df_5 = [
-    {"words ": "highly recommend", "cnt": 5989},
+    {"words ": "highly recommend-user", "cnt": 5989},
     {"words ": "first time", "cnt": 4838},
     {"words ": "go back", "cnt": 4793},
     {"words ": "really good", "cnt": 4486},
@@ -148,7 +148,7 @@ const df_9 = [
     {"text": "go back", "value": 7991},
     {"text": "first time", "value": 6977},
     {"text": "customer service", "value": 6203},
-    {"text": "highly recommend", "value": 6178},
+    {"text": "highly recommend-user", "value": 6178},
     {"text": "really good", "value": 5734},
     {"text": "come back", "value": 5723},
     {"text": "food good", "value": 5192},
@@ -183,9 +183,9 @@ const df_9 = [
     {"text": "place go", "value": 2185},
     {"text": "long time", "value": 2141},
     {"text": "place great", "value": 2138},
-    {"text": "definitely recommend", "value": 2103},
+    {"text": "definitely recommend-user", "value": 2103},
     {"text": "tasted like", "value": 2080},
-    {"text": "recommend place", "value": 2078},
+    {"text": "recommend-user place", "value": 2078},
     {"text": "fried chicken", "value": 2042},
     {"text": "front desk", "value": 2039},
     {"text": "mac cheese", "value": 2003},
@@ -349,7 +349,7 @@ const df_10 = [
     related_words: [
         "go back",
         "customer service",
-        "highly recommend",
+        "highly recommend-user",
         "really good",
         "come back",
         "have ever",
@@ -366,7 +366,7 @@ const df_10 = [
         "make sure"
     ]
 },{
-    word: "highly recommend",
+    word: "highly recommend-user",
     related_words: [
         "first time",
         "have ever"
@@ -402,7 +402,7 @@ const df_10 = [
         "go back",
         "first time",
         "customer service",
-        "highly recommend",
+        "highly recommend-user",
         "really good",
         "come back",
         "ice cream",
