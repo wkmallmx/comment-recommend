@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default function Operation() {
    useEffect(() => {
-        document.title = '商家推荐';
+        document.title = '经营推荐';
     }, []);
 
   return (
@@ -21,7 +21,7 @@ export default function Operation() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">智能推荐</h1>
-            <p className="text-xl text-gray-400">以下建议可能会帮助你更好地经营。</p>
+            <p className="text-xl text-gray-400">以下建议可能会帮助你更好地经营♡</p>
           </div>
 
           {/* Items */}
