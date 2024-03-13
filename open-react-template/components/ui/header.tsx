@@ -6,17 +6,6 @@ import MobileMenu from './mobile-menu'
 import React, {useState} from 'react';
 import logo from '@/public/images/logo.png'
 
-export const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, pageId: string) => {
-    e.preventDefault(); // 阻止链接的默认跳转行为
-
-    const targetSection = document.getElementById(pageId);
-
-    if (targetSection) {
-        const topOffset = targetSection.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({top: topOffset, behavior: "smooth"});
-    }
-};
-
 export default function Header() {
     const [isOpen_store, setIsOpen_store] = useState(false);
     const [isOpen_user, setIsOpen_user] = useState(false);
@@ -24,7 +13,6 @@ export default function Header() {
     const [isOpen_score, setIsOpen_score] = useState(false);
     const [isOpen_checkin, setIsOpen_checkin] = useState(false);
     const [isOpen_total, setIsOpen_total] = useState(false);
-
 
     return (
         <header className="absolute w-full z-30">
@@ -181,10 +169,10 @@ export default function Header() {
                                 className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_checkin ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
-                                     <Link href="/checkin-total"
+                                    <Link href="/checkin-total"
                                           className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
                                           onClick={() => setIsOpen_checkin(!isOpen_checkin)}>打卡总览</Link>
-                                     <Link href="/checkin-hot"
+                                    <Link href="/checkin-hot"
                                           className="block px-4 py-2 text-sm text-purple-600 hover:text-gray-200"
                                           onClick={() => setIsOpen_checkin(!isOpen_checkin)}>打卡热门</Link>
                                 </div>
@@ -218,20 +206,12 @@ export default function Header() {
                         </div>
 
                         {/* Desktop sign in links */}
-                        <ul className="flex grow justify-end flex-wrap items-center">
-                            {/*    <li>
-                                <Link href="/signup"
-                                      className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">
-                                    注册
-                                </Link>
-                            </li> */}
-                            <li>
-                                <Link href="/signin"
-                                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
-                                    登陆
-                                </Link>
-                            </li>
-                        </ul>
+                        <div className="flex grow justify-end flex-wrap items-center">
+                            <Link href="/signin"
+                                  className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
+                                登录
+                            </Link>
+                        </div>
                     </nav>
 
                     <MobileMenu/>

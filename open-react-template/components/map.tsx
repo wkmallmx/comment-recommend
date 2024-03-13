@@ -1,7 +1,9 @@
 'use client'
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Map, APILoader, Provider, Marker, InfoWindow} from '@uiw/react-baidu-map';
+import {Request} from "@/app/api/axios";
+
 
 const BaiduMap = () => {
 
@@ -14,7 +16,10 @@ const BaiduMap = () => {
     })
 
     const [isOpen, setIsOpen] = useState(false)
-    const [content, setContent] = useState('这是信息')
+    const [text, setText] = useState('none')
+    const [point, setPoint] = useState({lng: -73.754968, lat: 42.6511674})
+
+    const content = `<p style='font-size: 16px'>${text}</p>`;
 
     function markerRef(props: any) {
         if (props && props.marker) {
@@ -30,14 +35,14 @@ const BaiduMap = () => {
 
     return (
 
-        <Map zoom={13} center={center} enableScrollWheelZoom={true}>
+        <Map zoom={10} center={center} enableScrollWheelZoom={true}>
 
             {/* 标记 */}
-            <Marker ref={markerRef} position={{lng: -73.754968, lat: 42.6511674}} icon={icon}
+            <Marker ref={markerRef} position={point} icon={icon}
                     onClick={() => setIsOpen(!isOpen)}/>
 
             {/* 条件渲染信息窗口 */}
-            <InfoWindow ref={infoWindowRef} position={center} content="<p style='font-size: 16px'>信息</p>" isOpen={isOpen}/>
+            <InfoWindow ref={infoWindowRef} position={point} content={content} isOpen={isOpen}/>
 
         </Map>
     )
