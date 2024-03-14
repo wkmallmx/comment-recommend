@@ -1,25 +1,42 @@
 'use client'
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Map, APILoader, Provider, Marker, InfoWindow} from '@uiw/react-baidu-map';
-import {Request} from "@/app/api/axios";
+import {UserContext} from "@/context";
+import axios from "axios";
 
 
 const BaiduMap = () => {
+    const {user, setUser} = useContext(UserContext);
 
-    const center = {lng: -73.754968, lat: 42.6511674}
+    const center = {lng: user.longitude, lat: user.latitude}
 
-    const icon = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+    const iconR = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
         scale: 2, // 图标缩放大小
         fillColor: "red", // 填充颜色
         fillOpacity: 0.8, // 填充透明度
     })
 
-    const [isOpen, setIsOpen] = useState(false)
-    const [text, setText] = useState('none')
-    const [point, setPoint] = useState({lng: -73.754968, lat: 42.6511674})
+    const iconG = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+        scale: 1.5, // 图标缩放大小
+        fillColor: "green", // 填充颜色
+        fillOpacity: 0.8, // 填充透明度
+    })
 
-    const content = `<p style='font-size: 16px'>${text}</p>`;
+    const [isOpen, setIsOpen] = useState(false)
+    const [isOpenA, setIsOpenA] = useState([])
+
+    const toggleInfoWindow = (index) => {
+        setIsOpenA(prevState => {
+            // 复制当前的数组状态
+            const newState = [...prevState];
+            // 切换指定索引处的开关状态
+            newState[index] = !newState[index];
+            return newState;
+        });
+    };
+
+    const content = `<p style='font-size: 16px'>你的位置</p>`;
 
     function markerRef(props: any) {
         if (props && props.marker) {
@@ -33,16 +50,55 @@ const BaiduMap = () => {
         }
     }
 
+    const [firstTwelve, setFirstTwelve] = useState([])
+
+    const handleRequest = async () => {
+        let formData = new FormData();
+        formData.append("username", user.name);
+        formData.append("search_text", user.text);
+
+        console.log(user.name)
+        console.log(user.text)
+
+        try {
+            const response = await axios.post("http://127.0.0.1:5000/search/business", formData);
+            setFirstTwelve(JSON.parse(response.data.data).slice(0, 12))
+            console.log(response.data)
+
+        } catch (error: any) {
+            // error.response 可能包含来自服务器的响应对象
+            if (error.response) {
+                console.error('响应状态码:', error.response.status);
+                console.error('错误响应数据:', error.response.data);
+            } else {
+                console.error('请求失败:', error.message);
+            }
+        }
+    }
+
+    useEffect(() => {
+        handleRequest()
+    }, []);
+
     return (
 
-        <Map zoom={10} center={center} enableScrollWheelZoom={true}>
+        <Map zoom={12} center={center} enableScrollWheelZoom={true}>
 
             {/* 标记 */}
-            <Marker ref={markerRef} position={point} icon={icon}
+            <Marker ref={markerRef} position={center} icon={iconR}
                     onClick={() => setIsOpen(!isOpen)}/>
 
             {/* 条件渲染信息窗口 */}
-            <InfoWindow ref={infoWindowRef} position={point} content={content} isOpen={isOpen}/>
+            <InfoWindow ref={infoWindowRef} position={center} content={content} isOpen={isOpen}/>
+
+            {firstTwelve.map((store, index) => (
+                <React.Fragment key={index}>
+                    <Marker ref={markerRef} position={{lng: store.longitude, lat: store.latitude}} icon={iconG}
+                            onClick={() => toggleInfoWindow(index)}/>
+                    <InfoWindow ref={infoWindowRef} position={{lng: store.longitude, lat: store.latitude}}
+                                content={`<p style='font-size: 16px'>name: ${store.name}<br>distance: ${store.distance} km</p>`} isOpen={isOpenA[index] || false}/>
+                </React.Fragment>
+            ))}
 
         </Map>
     )

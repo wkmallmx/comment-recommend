@@ -1,12 +1,16 @@
 'use client'
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import Link from 'next/link';
 import {Switch} from 'antd';
 import PageIllustrationF from "@/components/page-illustration-f";
 import PageIllustrationB from "@/components/page-illustration-b";
 import Friends from "@/components/friends";
 import InterestedStores from "@/components/interested-stores";
+
+import axios from 'axios'
+import {UserContext} from "@/context";
+import {useRouter} from "next/navigation";
 
 export default function Search() {
     useEffect(() => {
@@ -17,9 +21,31 @@ export default function Search() {
 
     const linkHref = isUserMode ? '/recommend-user' : '/recommend-store';
 
+    const router = useRouter()
+
+    const [text, setText] = useState('');
+
+    const {user, setUser} = useContext(UserContext);
+
     const handleModeChange = (checked: any) => {
         setIsUserMode(checked);
     };
+
+    const handleSubmit = async (e: any) => {
+
+        e.preventDefault(); // 阻止表单的默认提交行为
+
+        setUser(() => ({
+            latitude: user.latitude,
+            longitude: user.longitude,
+            role: user.role,
+            name: user.name,
+            text: text,
+        }));
+
+        router.push(linkHref)
+    };
+
 
     return (
         <section>
@@ -63,14 +89,21 @@ export default function Search() {
 
 
                         {/* CTA form */}
-                        <form className="w-full lg:w-2/3 text-center">
+                        <form className="w-full lg:w-2/3 text-center" onSubmit={handleSubmit}>
                             <div
                                 className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:max-w-none">
-                                <input type="email"
-                                       className="w-full appearance-none bg-purple-700 border border-purple-500 focus:border-purple-300 rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-purple-400"
-                                       placeholder="关键词…" aria-label="关键词…"/>
-                                <Link href={linkHref}
-                                      className="w-1/6 btn-sm text-purple-600 bg-purple-100 hover:bg-white shadow">搜索</Link>
+                                <>
+                                    <input type="text"
+                                           className="w-full appearance-none bg-purple-700 border border-purple-500 focus:border-purple-300 rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-purple-400"
+                                           placeholder="关键词…" aria-label="关键词…"
+                                           onChange={(e) => setText(e.target.value)} required/>
+                                </>
+                                <>
+                                    <button type="submit"
+                                            className="w-1/6 btn-sm text-purple-600 bg-purple-100 hover:bg-white shadow">
+                                        搜索
+                                    </button>
+                                </>
                             </div>
                         </form>
                     </div>

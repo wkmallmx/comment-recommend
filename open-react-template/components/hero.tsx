@@ -1,6 +1,5 @@
 import VideoThumb from '@/public/images/hero-image-01.jpg'
 import Image from "next/image";
-import logo from "@/public/images/logo.png";
 import React from "react";
 import Link from 'next/link';
 
@@ -36,25 +35,17 @@ export default function Hero() {
                            data-aos-delay="200">小组成员:</p>
                         <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                             <div data-aos="fade-up" data-aos-delay="400">
-                                <Link href="/search"
+                                <Link href="/signin"
                                       className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0">开始使用
                                 </Link>
                             </div>
                             <div data-aos="fade-up" data-aos-delay="600">
                                 <Link className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                                   href="/operation">源码仓库</Link>
+                                   href="/#">源码仓库</Link>
                             </div>
                         </div>
                     </div>
 
-                    {/* <ModalVideo
-                        thumb={VideoThumb}
-                        thumbWidth={1024}
-                        thumbHeight={576}
-                        thumbAlt="Modal video thumbnail"
-                        video="/videos/video.mp4"
-                        videoWidth={1920}
-                        videoHeight={1080} /> */}
                     <div className="flex justify-center items-center">
                         <Image
                             src={VideoThumb}

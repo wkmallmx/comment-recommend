@@ -1,13 +1,13 @@
 'use client'
 
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Link from "next/link";
 import MapComponent from "@/components/map";
 import PageIllustrationF from "@/components/page-illustration-f";
 import PageIllustrationB from "@/components/page-illustration-b";
 
-
-
+import axios from 'axios'
+import {UserContext} from "@/context";
 export default function Recommend() {
     useEffect(() => {
         document.title = '商家推荐';

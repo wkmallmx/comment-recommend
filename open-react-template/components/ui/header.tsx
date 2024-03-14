@@ -3,8 +3,10 @@
 import Link from 'next/link'
 import Image from 'next/image';
 import MobileMenu from './mobile-menu'
-import React, {useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import logo from '@/public/images/logo.png'
+import {UserContext} from "@/context";
+import {useRouter} from 'next/navigation';
 
 export default function Header() {
     const [isOpen_store, setIsOpen_store] = useState(false);
@@ -13,6 +15,30 @@ export default function Header() {
     const [isOpen_score, setIsOpen_score] = useState(false);
     const [isOpen_checkin, setIsOpen_checkin] = useState(false);
     const [isOpen_total, setIsOpen_total] = useState(false);
+
+    const {user, setUser} = useContext(UserContext);
+    const router = useRouter()
+
+    const handleLogout = () => {
+        setUser(() => ({
+            latitude: null,
+            longitude: null,
+            role: null,
+            name: null,
+            text: null,
+            id: null,
+        }));
+
+        console.log('用户信息', user.name);
+    }
+
+    useEffect(() => {
+        // 检查 user 状态，如果不为空则表示已经更新
+        if (user.name === null) {
+            // 根据 user.role 决定跳转路径
+            router.push('/home'); // 执行跳转
+        }
+    }, [user, router]); // 依赖项包含 user 和 router，以便在它们变化时重新执行
 
     return (
         <header className="absolute w-full z-30">
@@ -203,19 +229,19 @@ export default function Header() {
                                           onClick={() => setIsOpen_total(!isOpen_total)}>最佳商家</Link>
                                 </div>
                             </div>
-                        </div>
+                            </div>
 
-                        {/* Desktop sign in links */}
-                        <div className="flex grow justify-end flex-wrap items-center">
-                            <Link href="/signin"
-                                  className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
-                                登录
-                            </Link>
-                        </div>
+                            <div className="relative">
+                                {/* Logout */}
+                                <button
+                                    className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                    onClick={() => handleLogout()}>
+                                    登出
+                                </button>
+                            </div>
+
                     </nav>
-
                     <MobileMenu/>
-
                 </div>
             </div>
         </header>
