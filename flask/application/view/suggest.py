@@ -13,8 +13,8 @@ def suggest():
     else:
         business_id = request.form['business_id']
         business_df, res = get_matching_attributes(business_id)
-        business_df = business_df.first().asDict()
-        suggest = get_suggestion(business_df, res)
+        business_df = str(business_df.first().asDict())
+        suggest = get_suggestion(business_df, str(res))
         response = ResMsg(code=ResponseCode.SUCCESS,
                           data=dict(result=res, advice=suggest))
         return response.data
