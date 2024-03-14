@@ -1,42 +1,29 @@
-'use client'
+"use client";
 
-import React, {useState, useEffect, useContext} from 'react';
-import {Map, APILoader, Provider, Marker, InfoWindow} from '@uiw/react-baidu-map';
-import {UserContext} from "@/context";
-import axios from "axios";
-
-
+import React, { useState } from "react";
+import {
+  Map,
+  APILoader,
+  Provider,
+  Marker,
+  InfoWindow,
+} from "@uiw/react-baidu-map";
 const BaiduMap = () => {
-    const {user, setUser} = useContext(UserContext);
+  const center = { lng: -73.754968, lat: 42.6511674 };
 
-    const center = {lng: user.longitude, lat: user.latitude}
-
+  const icon = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+    scale: 2, // 图标缩放大小
+    fillColor: "red", // 填充颜色
+    fillOpacity: 0.8, // 填充透明度
+  });
     const iconR = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
         scale: 2, // 图标缩放大小
         fillColor: "red", // 填充颜色
         fillOpacity: 0.8, // 填充透明度
     })
 
-    const iconG = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
-        scale: 1.5, // 图标缩放大小
-        fillColor: "green", // 填充颜色
-        fillOpacity: 0.8, // 填充透明度
-    })
-
     const [isOpen, setIsOpen] = useState(false)
-    const [isOpenA, setIsOpenA] = useState([])
-
-    const toggleInfoWindow = (index) => {
-        setIsOpenA(prevState => {
-            // 复制当前的数组状态
-            const newState = [...prevState];
-            // 切换指定索引处的开关状态
-            newState[index] = !newState[index];
-            return newState;
-        });
-    };
-
-    const content = `<p style='font-size: 16px'>你的位置</p>`;
+    const [content, setContent] = useState('这是信息')
 
     function markerRef(props: any) {
         if (props && props.marker) {
@@ -89,16 +76,7 @@ const BaiduMap = () => {
                     onClick={() => setIsOpen(!isOpen)}/>
 
             {/* 条件渲染信息窗口 */}
-            <InfoWindow ref={infoWindowRef} position={center} content={content} isOpen={isOpen}/>
-
-            {firstTwelve.map((store, index) => (
-                <React.Fragment key={index}>
-                    <Marker ref={markerRef} position={{lng: store.longitude, lat: store.latitude}} icon={iconG}
-                            onClick={() => toggleInfoWindow(index)}/>
-                    <InfoWindow ref={infoWindowRef} position={{lng: store.longitude, lat: store.latitude}}
-                                content={`<p style='font-size: 16px'>name: ${store.name}<br>distance: ${store.distance} km</p>`} isOpen={isOpenA[index] || false}/>
-                </React.Fragment>
-            ))}
+            <InfoWindow ref={infoWindowRef} position={center} content="<p style='font-size: 16px'>信息</p>" isOpen={isOpen}/>
 
         </Map>
     )
