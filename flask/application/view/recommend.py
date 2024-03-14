@@ -38,6 +38,8 @@ def recommend_user():
         res = search_recommend.recommend_user(
             latitude, longitude, user_id=user.id, limit_distance=10)
         print(res.columns)
+        print(res.head())
+        res = res.drop(columns='friends')
         res = res.to_json(orient='records')
         response = ResMsg(code=ResponseCode.SUCCESS, data=res)
         return response.data

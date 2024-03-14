@@ -181,7 +181,7 @@ class Search_Recommend_Module():
         user_embedding = torch.from_numpy(user_embedding.T)
         res = self.search_user(latitude, longtitude, search_text=user_embedding, user_id=user_id,
                                limit_distance=limit_distance, Info_Cocoons=Info_Cocoons, is_recommend=True)
-        return res.head(100)
+        return res.head(10)
 
 
 """
