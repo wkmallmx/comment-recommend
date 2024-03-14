@@ -25,7 +25,6 @@ def get_search_business():
         res = search_module.search_business(
             latitude, longitude, search_text, limit_distance=10, user_id=user.id)
         res = res[['business_id', 'name', 'distance', 'latitude', 'longitude']]
-        print(res)
         # 转换为json格式
         res = res.to_json(orient='records')
         response = ResMsg(code=ResponseCode.SUCCESS, data=res)
@@ -44,6 +43,7 @@ def get_search_user():
         search_module = Search_Recommend_Module()
         res = search_module.search_user(
             latitude, longitude, search_text=request.form['search_text'],user_id=user.id, limit_distance=10)
+        res = res.drop(columns='friends').head(10)
         res = res.to_json(orient='records')
         response = ResMsg(code=ResponseCode.SUCCESS, data=res)
         return response.data
