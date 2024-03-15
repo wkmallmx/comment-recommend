@@ -31,7 +31,6 @@ def get_matching_attributes(business_id):
         for i in target_business_attributes_string:
             if target_business_attributes_string[i] == "True":
                 target_business_attributes_list.append(i)
-        print(target_business_attributes_list)
 
     # 获取目标行的categories字段值，并拆分成单独的单词
     target_categories = target_business_df.select("categories").collect()[0][0]
