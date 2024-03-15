@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import Image from 'next/image';
-import MobileMenu from './mobile-menu'
 import React, {useContext, useState, useEffect} from 'react';
 import logo from '@/public/images/logo.png'
 import {UserContext} from "@/context";
@@ -32,6 +31,10 @@ export default function Header() {
         console.log('用户信息', user.name);
     }
 
+     const handleLogin = () => {
+        router.push('/signin')
+    }
+
     useEffect(() => {
         // 检查 user 状态，如果不为空则表示已经更新
         if (user.name === null) {
@@ -42,12 +45,12 @@ export default function Header() {
 
     return (
         <header className="absolute w-full z-30">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="flex items-center justify-between h-24">
                     {/* Site branding */}
                     <div className="shrink-0 mr-4">
                         {/* Logo */}
-                        <div className="block mr-4">
+                        <div className="block mt-2 mr-4">
                             <Image
                                 src={logo}
                                 alt="四川大学"
@@ -63,7 +66,7 @@ export default function Header() {
                         <div className="relative">
                             {/* store trigger */}
                             <button
-                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-9 py-3 flex items-center transition duration-150 ease-in-out"
                                 onClick={() => setIsOpen_store(!isOpen_store)}>
                                 商户分析
                                 <svg
@@ -76,7 +79,7 @@ export default function Header() {
                             </button>
                             {/* store menu */}
                             <div
-                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_store ? '' : 'hidden'}`}
+                                className={`absolute mt-0 ml-6 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_store ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
                                     <Link href="/store-total"
@@ -92,7 +95,7 @@ export default function Header() {
                         <div className="relative">
                             {/* user trigger */}
                             <button
-                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-9 py-3 flex items-center transition duration-150 ease-in-out"
                                 onClick={() => setIsOpen_user(!isOpen_user)}>
                                 用户分析
                                 <svg
@@ -105,7 +108,7 @@ export default function Header() {
                             </button>
                             {/* user menu */}
                             <div
-                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_user ? '' : 'hidden'}`}
+                                className={`absolute mt-0 ml-6 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_user ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
                                     <Link href="/user-total"
@@ -121,7 +124,7 @@ export default function Header() {
                         <div className="relative">
                             {/* comment trigger */}
                             <button
-                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-9 py-3 flex items-center transition duration-150 ease-in-out"
                                 onClick={() => setIsOpen_comment(!isOpen_comment)}>
                                 评论分析
                                 <svg
@@ -134,7 +137,7 @@ export default function Header() {
                             </button>
                             {/* comment menu */}
                             <div
-                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_comment ? '' : 'hidden'}`}
+                                className={`absolute mt-0 ml-6 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_comment ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
                                     <Link href="/comment-total"
@@ -150,7 +153,7 @@ export default function Header() {
                         <div className="relative">
                             {/* score trigger */}
                             <button
-                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-9 py-3 flex items-center transition duration-150 ease-in-out"
                                 onClick={() => setIsOpen_score(!isOpen_score)}>
                                 评分分析
                                 <svg
@@ -163,7 +166,7 @@ export default function Header() {
                             </button>
                             {/* score menu */}
                             <div
-                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_score ? '' : 'hidden'}`}
+                                className={`absolute mt-0 ml-6 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_score ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
                                     <Link href="/score-total"
@@ -179,7 +182,7 @@ export default function Header() {
                         <div className="relative">
                             {/* checkin trigger */}
                             <button
-                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-9 py-3 flex items-center transition duration-150 ease-in-out"
                                 onClick={() => setIsOpen_checkin(!isOpen_checkin)}>
                                 打卡分析
                                 <svg
@@ -192,7 +195,7 @@ export default function Header() {
                             </button>
                             {/* checkin menu */}
                             <div
-                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_checkin ? '' : 'hidden'}`}
+                                className={`absolute mt-0 ml-6 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_checkin ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
                                     <Link href="/checkin-total"
@@ -208,7 +211,7 @@ export default function Header() {
                         <div className="relative">
                             {/* total trigger */}
                             <button
-                                className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
+                                className="group font-medium text-purple-600 hover:text-gray-200 px-9 py-3 flex items-center transition duration-150 ease-in-out"
                                 onClick={() => setIsOpen_total(!isOpen_total)}>
                                 综合分析
                                 <svg
@@ -221,7 +224,7 @@ export default function Header() {
                             </button>
                             {/* total menu */}
                             <div
-                                className={`absolute mt-0 ml-5 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_total ? '' : 'hidden'}`}
+                                className={`absolute mt-0 ml-6 w-24 bg-black bg-opacity-20 rounded-md shadow-lg z-50 ${isOpen_total ? '' : 'hidden'}`}
                                 aria-labelledby="menu-button">
                                 <div className="py-1">
                                     <Link href="/total"
@@ -229,19 +232,18 @@ export default function Header() {
                                           onClick={() => setIsOpen_total(!isOpen_total)}>最佳商家</Link>
                                 </div>
                             </div>
-                            </div>
+                        </div>
 
-                            <div className="relative">
-                                {/* Logout */}
-                                <button
-                                    className="group font-medium text-purple-600 hover:text-gray-200 px-8 py-3 flex items-center transition duration-150 ease-in-out"
-                                    onClick={() => handleLogout()}>
-                                    登出
-                                </button>
-                            </div>
+                        <div className="relative">
+                            {/* Logout */}
+                            <button
+                                className="group font-medium text-gray-200 hover:text-purple-700 px-9 py-3 flex items-center transition duration-150 ease-in-out"
+                                onClick={user.name ? handleLogout : handleLogin}>
+                                {user.name ? `你好,${user.name}` : "尚未登录"}
+                            </button>
+                        </div>
 
                     </nav>
-                    <MobileMenu/>
                 </div>
             </div>
         </header>

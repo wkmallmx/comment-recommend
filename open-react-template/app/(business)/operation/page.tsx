@@ -2,7 +2,7 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 import Image from 'next/image'
-
+import PageIllustrationF from "@/components/page-illustration-f";
 import Link from "next/link";
 import axios from 'axios'
 import {UserContext} from "@/context";
@@ -45,6 +45,7 @@ export default function Operation() {
 
     return (
         <section>
+            <PageIllustrationF/>
             <div className="max-w-6xl mx-auto px-4 py-24 sm:px-6">
                 <div className="py-12 md:py-20">
 
@@ -69,7 +70,7 @@ export default function Operation() {
                                     </svg>
                                 </div>
                             </div>
-                            <blockquote className="text-lg text-gray-400 grow">— {adviceText}
+                            <blockquote className="text-lg text-gray-400 grow">{adviceText}
                             </blockquote>
                             <div className="text-gray-700 font-medium mt-6 pt-5 border-t border-gray-700">
                                 <cite className="font-architects-daughter text-xl text-purple-600 mb-2">More Stars Less Spend</cite>

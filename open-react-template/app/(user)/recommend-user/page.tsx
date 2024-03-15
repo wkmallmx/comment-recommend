@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState, useContext} from 'react';
 import Image from 'next/image'
-
+import PageIllustrationF from "@/components/page-illustration-f";
 import FriendImage from '@/public/images/friend.png'
 import Link from "next/link";
 
@@ -37,6 +37,19 @@ export default function Recommend() {
         }
     }
 
+    const handleQuit = () => {
+        setUser(() => ({
+            latitude: user.latitude,
+            longitude: user.longitude,
+            role: user.role,
+            name: user.name,
+            text: null,
+            id: user.id,
+        }));
+
+        console.log('用户信息', user.name);
+    }
+
     useEffect(() => {
         handleRequest()
     }, []);
@@ -47,6 +60,7 @@ export default function Recommend() {
 
     return (
         <section>
+            <PageIllustrationF/>
             <div className="max-w-6xl mx-auto px-4 py-16 sm:px-6">
                 <div className="py-12 md:py-20">
 
@@ -60,7 +74,8 @@ export default function Recommend() {
 
                         {
                             firstTwelve.map((friend, index) => (
-                                <div key={index} className="flex flex-col h-full p-6 bg-gray-800" data-aos="fade-up" data-aos-delay={`${200 * index}`}>
+                                <div key={index} className="flex flex-col h-full p-6 bg-gray-800" data-aos="fade-up"
+                                     data-aos-delay={`${200 * index}`}>
                                     <div>
                                         <div className="relative inline-flex flex-col mb-4">
                                             <Image className="rounded-full" src={FriendImage} width={48}
@@ -90,7 +105,8 @@ export default function Recommend() {
             </div>
             <div className="flex justify-end pr-36 pb-36">
                 <Link href="/search"
-                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700">返回搜索</Link>
+                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700"
+                      onClick={() => handleQuit()}>返回搜索</Link>
             </div>
         </section>
     )

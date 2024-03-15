@@ -1,4 +1,4 @@
-import VideoThumb from '@/public/images/hero-image-01.jpg'
+import Thumb from '@/public/images/bigdata.jpg'
 import Image from "next/image";
 import React from "react";
 import Link from 'next/link';
@@ -32,7 +32,7 @@ export default function Hero() {
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <h1 className="h1 mt-8 mb-4" data-aos="fade-up">点评数据分析及推荐</h1>
                         <p className="text-xl text-gray-400 mb-8" data-aos="fade-up"
-                           data-aos-delay="200">小组成员:</p>
+                           data-aos-delay="200">第五组</p>
                         <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                             <div data-aos="fade-up" data-aos-delay="400">
                                 <Link href="/signin"
@@ -41,15 +41,15 @@ export default function Hero() {
                             </div>
                             <div data-aos="fade-up" data-aos-delay="600">
                                 <Link className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                                   href="/#">源码仓库</Link>
+                                   href="https://github.com/wkmallmx/comment-recommend">源码仓库</Link>
                             </div>
                         </div>
                     </div>
 
                     <div className="flex justify-center items-center">
                         <Image
-                            src={VideoThumb}
-                            alt="第五组开发成员"
+                            src={Thumb}
+                            alt="大数据"
                             width={1024}
                             height={576}
                         />
