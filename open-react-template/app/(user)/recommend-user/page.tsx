@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useRef, useEffect, useState, useContext} from 'react';
 import Image from 'next/image'
 import PageIllustrationF from "@/components/page-illustration-f";
 import FriendImage from '@/public/images/friend.png'
@@ -18,13 +18,13 @@ export default function Recommend() {
         formData.append("username", user.name);
         formData.append("search_text", user.text);
 
-        console.log(user.name)
-        console.log(user.text)
+        console.log('请求已发送...')
 
         try {
             const response = await axios.post("http://127.0.0.1:5000/search/user", formData);
             setFirstTwelve(JSON.parse(response.data.data).slice(1, 13))
-            console.log(response.data)
+
+            console.log('回复已收到...')
 
         } catch (error: any) {
             // error.response 可能包含来自服务器的响应对象
@@ -47,15 +47,18 @@ export default function Recommend() {
             id: user.id,
         }));
 
-        console.log('用户信息', user.name);
+        console.log('搜索信息', user.text);
     }
 
-    useEffect(() => {
-        handleRequest()
-    }, []);
+    const renderRef = useRef(true)
 
     useEffect(() => {
+         if (renderRef.current) {
+            renderRef.current = false
+            return
+        }
         document.title = '用户推荐';
+        handleRequest()
     }, []);
 
     return (
@@ -74,8 +77,7 @@ export default function Recommend() {
 
                         {
                             firstTwelve.map((friend, index) => (
-                                <div key={index} className="flex flex-col h-full p-6 bg-gray-800" data-aos="fade-up"
-                                     data-aos-delay={`${200 * index}`}>
+                                <div key={index} className="flex flex-col h-full p-6 bg-gray-800" data-aos="fade-up">
                                     <div>
                                         <div className="relative inline-flex flex-col mb-4">
                                             <Image className="rounded-full" src={FriendImage} width={48}

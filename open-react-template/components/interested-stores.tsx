@@ -3,7 +3,7 @@ import Image from 'next/image'
 import StoreImage from '@/public/images/store.png'
 
 import {UserContext} from "@/context";
-import {useContext, useEffect, useState} from "react";
+import {useRef, useContext, useEffect, useState} from "react";
 import axios from "axios";
 
 export default function InterestedStores() {
@@ -29,7 +29,13 @@ export default function InterestedStores() {
         }
     }
 
+     const renderRef = useRef(true)
+
      useEffect(() => {
+          if (renderRef.current) {
+            renderRef.current = false
+            return
+        }
         handleRequest()
     }, []);
 

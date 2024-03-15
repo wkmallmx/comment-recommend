@@ -4,7 +4,7 @@ import Image from 'next/image'
 import {UserContext} from "@/context";
 import FriendImage from '@/public/images/friend.png'
 
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 export default function Friends() {
@@ -31,7 +31,13 @@ export default function Friends() {
         }
     }
 
+    const renderRef = useRef(true)
+
     useEffect(() => {
+         if (renderRef.current) {
+            renderRef.current = false
+            return
+        }
         handleRequest()
     }, []);
 

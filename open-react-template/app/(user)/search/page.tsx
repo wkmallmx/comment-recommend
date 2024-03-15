@@ -8,7 +8,6 @@ import PageIllustrationB from "@/components/page-illustration-b";
 import Friends from "@/components/friends";
 import InterestedStores from "@/components/interested-stores";
 
-import axios from 'axios'
 import {UserContext} from "@/context";
 import {useRouter} from "next/navigation";
 

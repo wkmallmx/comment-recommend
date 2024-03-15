@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useRef, useContext, useEffect, useState} from 'react';
 import Image from 'next/image'
 import PageIllustrationF from "@/components/page-illustration-f";
 import Link from "next/link";
@@ -16,12 +16,13 @@ export default function Operation() {
         let formData = new FormData();
         formData.append("business_id", user.id);
 
-        console.log(user.id)
+        console.log('请求已发送...')
 
         try {
             const response = await axios.post(`http://127.0.0.1:5000/suggest/?business_id=${user.id}`, formData);
             setAdviceText(response.data.data.advice)
-            console.log(adviceText)
+
+            console.log('回复已收到...')
 
         } catch (error: any) {
             // error.response 可能包含来自服务器的响应对象
@@ -34,13 +35,15 @@ export default function Operation() {
         }
     }
 
+    const renderRef = useRef(true)
+
     useEffect(() => {
+        if (renderRef.current) {
+            renderRef.current = false
+            return
+        }
+         document.title = '经营推荐';
         handleRequest()
-    }, []);
-
-
-    useEffect(() => {
-        document.title = '经营推荐';
     }, []);
 
     return (
