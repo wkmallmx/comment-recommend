@@ -67,5 +67,4 @@ def check_business_hours(df_business):
     is_open_df = is_open_df.withColumn('id', monotonically_increasing_id())
     df_business = df_business.join(is_open_df, 'id', 'inner').drop('id')
     df_business.show()
-
 check_business_hours(business_df)
