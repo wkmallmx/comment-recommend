@@ -1,0 +1,41 @@
+{
+  "name": "open-pro-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "@headlessui/react": "^1.7.17",
+    "@react-google-maps/api": "^2.19.3",
+    "@types/node": "^20.10.4",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "@uiw/react-baidu-map": "^2.7.1",
+    "antd": "^5.15.0",
+    "aos": "^3.0.0-beta.6",
+    "axios": "^1.6.7",
+    "leaflet": "^1.9.4",
+    "next": "^14.1.3",
+    "react": "18.2.0",
+    "react-baidu-map": "^1.3.5",
+    "react-bmapgl": "^0.2.27",
+    "react-dom": "18.2.0",
+    "react-leaflet": "^4.2.1",
+    "recharts": "^2.12.2",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@types/aos": "^3.0.7",
+    "@types/googlemaps": "^3.43.3",
+    "@types/lodash": "^4.14.202",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6"
+  }
+}
