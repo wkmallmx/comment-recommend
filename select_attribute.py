@@ -14,7 +14,7 @@ business_path = 'yelp_academic_dataset_business.json'
 business_df = spark.read.json(business_path)
 
 
-def get_matching_attributes(business_id,  business_df):
+def get_matching_attributes(business_id):
     # 找到指定business_id对应的行
     target_business_df = business_df.filter(col("business_id") == business_id)
     # 如果找不到对应的行，返回空列表
@@ -31,7 +31,7 @@ def get_matching_attributes(business_id,  business_df):
         for i in target_business_attributes_string:
             if target_business_attributes_string[i] == "True":
                 target_business_attributes_list.append(i)
-        print(target_business_attributes_list)
+        # print(target_business_attributes_list)
 
     # 获取目标行的categories字段值，并拆分成单独的单词
     target_categories = target_business_df.select("categories").collect()[0][0]
@@ -59,15 +59,5 @@ def get_matching_attributes(business_id,  business_df):
             for w in attributes:
                 if attributes[w] == "True" and w not in result and w not in target_business_attributes_list:
                     result.append(w)
-    return result
+    return target_business_df, result
 
-
-
-all_business_ids = business_df.select("business_id").rdd.flatMap(lambda x: x).collect()
-
-# 逐个调用函数进行测试
-for business_id in all_business_ids:
-    attributes_list = get_matching_attributes(business_id, business_df)
-    # 打印结果
-    print(f"Business ID: {business_id}, Matching Attributes: {attributes_list}")
-    print(f"Number of matching attributes: {len(attributes_list)}")
