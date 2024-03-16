@@ -5,6 +5,7 @@ from application.view import register_bps
 from application.extensions import init_plugs
 from flask_cors import CORS
 
+
 def create_app():
     app = Flask(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -14,7 +15,7 @@ def create_app():
 
     # 注册蓝图
     register_bps(app)
-    
+
     # 注册插件
     init_plugs(app)
 

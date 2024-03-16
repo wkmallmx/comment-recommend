@@ -47,6 +47,7 @@ def login():
         return {'msg': '密码错误'}, ResponseCode.FAIL
     #  登录成功
     else:
+        id = user.id
         role = user.role
         latitude = user.latitude
         longitude = user.longitude
@@ -54,5 +55,5 @@ def login():
 
         res = ResMsg()
         res.update(code=ResponseCode.SUCCESS, data={
-                   'role': role, 'latitude': latitude, 'longitude': longitude, 'id': id})
+                   'id': id, 'role': role, 'latitude': latitude, 'longitude': longitude})
         return res.data

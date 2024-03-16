@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, request
-from application.common import route, ResMsg, ResponseCode,make_key
-from application.extensions import db,cache
+from application.common import route, ResMsg, ResponseCode, make_key
+from application.extensions import db, cache
 from application.models import User
 import pandas as pd
 from application.extensions import search_module
@@ -27,7 +27,7 @@ def recommend_business():
 
 
 @route(recommend_bp, '/user', methods=['GET', 'POST'])
-@cache.cached(timeout=240,make_cache_key=make_key)
+@cache.cached(timeout=240, make_cache_key=make_key)
 def recommend_user():
     if request.method == 'GET':
         return {"message": "recommend"}, 200
