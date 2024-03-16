@@ -1,7 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_caching import Cache
 
+
+cache = Cache(config={'CACHE_TYPE': 'simple'})
+def init_cache(app: Flask):
+    cache.init_app(app)
+    
 db = SQLAlchemy()
 def init_databases(app: Flask):
     db.init_app(app)
