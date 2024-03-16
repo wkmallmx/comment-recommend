@@ -2,6 +2,7 @@ from functools import wraps
 from flask import jsonify
 from .response import ResMsg
 
+
 def route(bp, *args, **kwargs):
     """
     路由设置,统一返回格式
@@ -42,4 +43,3 @@ def route(bp, *args, **kwargs):
         return wrapper
 
     return decorator
-

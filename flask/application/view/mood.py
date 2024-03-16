@@ -1,12 +1,14 @@
 from application.common import route, ResMsg, ResponseCode
 from application.extensions import sentiment_analysis
 from flask import Flask, Blueprint, request
+from application.common import cache, make_key
 
 
 mood_bp = Blueprint('mood', __name__, url_prefix='/mood')
 
 
-@route(mood_bp, '/analysis', methods=['POST'])
+@route(mood_bp, '/', methods=['POST'])
+@cache.cached(timeout=240, make_cache_key=make_key)
 def get_mood_analysis():
     """
     获取情感分析结果

@@ -1,11 +1,13 @@
 from .code import ResponseCode, ResponseMessage
+
+
 class ResMsg(object):
     """
     封装响应文本
     """
 
-    def __init__(self, data=None, code=ResponseCode.SUCCESS, 
-    			 msg=ResponseMessage.SUCCESS):
+    def __init__(self, data=None, code=ResponseCode.SUCCESS,
+                 msg=ResponseMessage.SUCCESS):
         self._data = data
         self._msg = msg
         self._code = code

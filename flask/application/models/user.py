@@ -14,4 +14,3 @@ class User(db.Model):
     role = db.Column(db.String(50), nullable=False, comment='角色')
     latitude = db.Column(db.Float, nullable=False, comment='纬度')
     longitude = db.Column(db.Float, nullable=False, comment='经度')
-
