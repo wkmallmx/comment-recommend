@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import {
     Map,
     APILoader,
@@ -61,13 +61,10 @@ const BaiduMap = () => {
         formData.append("username", user.name);
         formData.append("search_text", user.text);
 
-        console.log(user.name)
-        console.log(user.text)
 
         try {
             const response = await axios.post("http://127.0.0.1:5000/search/business", formData);
             setFirstTwelve(JSON.parse(response.data.data).slice(0, 12))
-            console.log(response.data)
 
         } catch (error: any) {
             // error.response 可能包含来自服务器的响应对象
@@ -80,7 +77,13 @@ const BaiduMap = () => {
         }
     }
 
+    const renderRef = useRef(true)
+
     useEffect(() => {
+         if (renderRef.current) {
+            renderRef.current = false
+            return
+        }
         handleRequest()
     }, []);
 

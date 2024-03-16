@@ -50,7 +50,9 @@ def login():
         role = user.role
         latitude = user.latitude
         longitude = user.longitude
+        id = user.id
+
         res = ResMsg()
         res.update(code=ResponseCode.SUCCESS, data={
-                   'role': role, 'latitude': latitude, 'longitude': longitude})
+                   'role': role, 'latitude': latitude, 'longitude': longitude, 'id': id})
         return res.data

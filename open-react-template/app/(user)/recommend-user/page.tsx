@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import Image from 'next/image'
 import PageIllustrationF from "@/components/page-illustration-f";
 import FriendImage from '@/public/images/friend.png'
@@ -50,12 +50,15 @@ export default function Recommend() {
         console.log('用户信息', user.name);
     }
 
-    useEffect(() => {
-        handleRequest()
-    }, []);
+     const renderRef = useRef(true)
 
     useEffect(() => {
+         if (renderRef.current) {
+            renderRef.current = false
+            return
+        }
         document.title = '用户推荐';
+        handleRequest()
     }, []);
 
     return (

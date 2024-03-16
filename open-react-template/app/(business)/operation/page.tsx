@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useRef} from 'react';
 import Image from 'next/image'
 import PageIllustrationF from "@/components/page-illustration-f";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import axios from 'axios'
 import {UserContext} from "@/context";
 
 import AdviceImage from "@/public/images/advice.png";
+
 export default function Operation() {
     const {user, setUser} = useContext(UserContext);
     const [adviceText, setAdviceText] = useState('')
@@ -34,13 +35,15 @@ export default function Operation() {
         }
     }
 
-    useEffect(() => {
-        handleRequest()
-    }, []);
-
+    const renderRef = useRef(true)
 
     useEffect(() => {
+        if (renderRef.current) {
+            renderRef.current = false
+            return
+        }
         document.title = '经营推荐';
+        handleRequest()
     }, []);
 
     return (
@@ -73,7 +76,8 @@ export default function Operation() {
                             <blockquote className="text-lg text-gray-400 grow">{adviceText}
                             </blockquote>
                             <div className="text-gray-700 font-medium mt-6 pt-5 border-t border-gray-700">
-                                <cite className="font-architects-daughter text-xl text-purple-600 mb-2">More Stars Less Spend</cite>
+                                <cite className="font-architects-daughter text-xl text-purple-600 mb-2">More Stars Less
+                                    Spend</cite>
                             </div>
                         </div>
                     </div>
