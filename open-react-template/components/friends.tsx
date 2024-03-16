@@ -4,7 +4,7 @@ import Image from 'next/image'
 import {UserContext} from "@/context";
 import FriendImage from '@/public/images/friend.png'
 
-import {useContext, useEffect, useState, useRef} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 export default function Friends() {

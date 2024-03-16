@@ -494,32 +494,7 @@ export const Draw_Bar_1 = () => {
         </ResponsiveContainer>
     );
 };
-export const Draw_Pie_1 = () => {
-    return (
-        <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-                <Pie
-                    data={df_3}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={160}
-                    fill="#8884d8"
-                    dataKey="count"
-                    nameKey="categories"
-                    label={(entry) => entry.name}
-                >
-                    {
-                        df_3.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
-                        ))
-                    }
-                </Pie>
-                <Tooltip/>
-            </PieChart>
-        </ResponsiveContainer>
-    );
-};
+
 
 export const Draw_Bar_2 = () => {
     return (
@@ -601,6 +576,33 @@ export const Draw_Bar_4 = () => {
                     }
                 </Bar>
             </BarChart>
+        </ResponsiveContainer>
+    );
+};
+
+export const Draw_Pie_1 = () => {
+    return (
+        <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+                <Pie
+                    data={df_3}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={160}
+                    fill="#8884d8"
+                    dataKey="count"
+                    nameKey="categories"
+                    label={(entry) => entry.name}
+                >
+                    {
+                        df_3.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                        ))
+                    }
+                </Pie>
+                <Tooltip/>
+            </PieChart>
         </ResponsiveContainer>
     );
 };

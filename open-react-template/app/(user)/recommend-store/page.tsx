@@ -1,22 +1,36 @@
 'use client'
 
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import Link from "next/link";
 import MapComponent from "@/components/map";
 import PageIllustrationF from "@/components/page-illustration-f";
 import PageIllustrationB from "@/components/page-illustration-b";
-
-import axios from 'axios'
 import {UserContext} from "@/context";
+
 export default function Recommend() {
     useEffect(() => {
         document.title = '商家推荐';
     }, []);
 
+    const {user, setUser} = useContext(UserContext);
+
+    const handleQuit = () => {
+        setUser(() => ({
+            latitude: user.latitude,
+            longitude: user.longitude,
+            role: user.role,
+            name: user.name,
+            text: null,
+            id: user.id,
+        }));
+
+        console.log('搜索信息', user.text);
+    }
+
     return (
         <section>
             <PageIllustrationF/>
-            <div className="max-w-6xl mx-auto px-4 py-16 sm:px-6">
+            <div className="max-w-6xl mx-auto px-4 pt-16 sm:px-6">
                 <div className="py-12 md:py-20">
 
                     {/* Section header */}
@@ -34,7 +48,8 @@ export default function Recommend() {
             </div>
             <div className="flex justify-end pr-36 pb-36">
                 <Link href="/search"
-                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700">返回搜索</Link>
+                      className="btn-sm text-white bg-purple-600 hover:bg-purple-700"
+                      onClick={() => handleQuit()}>返回搜索</Link>
             </div>
             <PageIllustrationB/>
         </section>
