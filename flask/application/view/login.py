@@ -1,7 +1,7 @@
 from flask import Blueprint, Flask, request
-from application.common import route, ResMsg, ResponseCode
+from application.common import route, ResMsg, ResponseCode, make_key
 from application.models import User
-from application.extensions import db,cache
+from application.extensions import db, cache
 import json
 # 创建蓝图
 login_bp = Blueprint('login', __name__, url_prefix='/login')
@@ -23,7 +23,7 @@ data_example_wrongusername = {
 
 
 @route(login_bp, '/', methods=['GET', 'POST'])
-@cache.cached(timeout=60)
+@cache.cached(timeout=60, make_cache_key=make_key)
 def login():
     if request.method == 'GET':
         username = 'admin'

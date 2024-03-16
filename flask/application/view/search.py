@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, request
-from application.common import route, ResMsg, ResponseCode
-from application.extensions import db,cache
+from application.common import route, ResMsg, ResponseCode, make_key
+from application.extensions import db, cache
 from application.models import User
 from application.extensions.requirment2.search_module import search_module
 import pandas as pd
@@ -12,7 +12,7 @@ search_bp = Blueprint('search', __name__, url_prefix='/search')
 
 
 @route(search_bp, '/business', methods=['GET', 'POST'])
-@cache.cached(timeout=240)
+@cache.cached(timeout=240, make_cache_key=make_key)
 def get_search_business():
     if request.method == 'GET':
         return {"message": "search business"}, 200
@@ -31,8 +31,8 @@ def get_search_business():
     return response.data
 
 
-@route(search_bp, '/user', methods=['GET','POST'])
-@cache.cached(timeout=240)
+@route(search_bp, '/user', methods=['GET', 'POST'])
+@cache.cached(timeout=240, make_cache_key=make_key)
 def get_search_user():
     if request.method == 'GET':
         return {"message": "search user"}, 200
@@ -42,7 +42,7 @@ def get_search_user():
         latitude = user.latitude
         longitude = user.longitude
         res = search_module.search_user(
-            latitude, longitude, search_text=request.form['search_text'],user_id=user.id, limit_distance=10)
+            latitude, longitude, search_text=request.form['search_text'], user_id=user.id, limit_distance=10)
         res = res.drop(columns='friends').head(10)
         res = res.to_json(orient='records')
         response = ResMsg(code=ResponseCode.SUCCESS, data=res)
