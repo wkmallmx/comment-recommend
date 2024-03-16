@@ -195,4 +195,7 @@ clip_text_encoder运行代码会自动安装
 search_recommend=Search_Recommend_Module()
 res=search_recommend.search_user(latitude=40,longtitude=-75,search_text=search_text)
 print(res)"""
-search_recommend = Search_Recommend_Module()
+search_module = Search_Recommend_Module()
+
+
+

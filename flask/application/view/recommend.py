@@ -1,15 +1,15 @@
 from flask import Flask, Blueprint, request
 from application.common import route, ResMsg, ResponseCode
-from application.extensions import db
+from application.extensions import db,cache
 from application.models import User
-from application.extensions.requirment2.search_module import Search_Recommend_Module
 import pandas as pd
-from application.extensions import search_recommend
+from application.extensions import search_module
 
 recommend_bp = Blueprint('recommend', __name__, url_prefix='/recommend')
 
 
 @route(recommend_bp, '/business', methods=['GET', 'POST'])
+@cache.cached(timeout=240)
 def recommend_business():
     if request.method == 'GET':
         return {"message": "recommend"}, 200
@@ -18,7 +18,7 @@ def recommend_business():
             User.username == request.form['username']).first()
         latitude = user.latitude
         longitude = user.longitude
-        res = search_recommend.recommend_business(
+        res = search_module.recommend_business(
             latitude, longitude, user_id=user.id, limit_distance=10)
         print(res.columns)
         res = res.to_json(orient='records')
@@ -27,6 +27,7 @@ def recommend_business():
 
 
 @route(recommend_bp, '/user', methods=['GET', 'POST'])
+@cache.cached(timeout=240)
 def recommend_user():
     if request.method == 'GET':
         return {"message": "recommend"}, 200
@@ -35,7 +36,7 @@ def recommend_user():
             User.username == request.form['username']).first()
         latitude = user.latitude
         longitude = user.longitude
-        res = search_recommend.recommend_user(
+        res = search_module.recommend_user(
             latitude, longitude, user_id=user.id, limit_distance=10)
         print(res.columns)
         print(res.head())

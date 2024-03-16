@@ -2,11 +2,13 @@ from flask import Flask, Blueprint, request
 from application.common import route, ResMsg, ResponseCode
 from application.extensions.requirment2.suggestion import get_matching_attributes
 from application.extensions import get_suggestion
+from application.extensions import cache
 
 suggest_bp = Blueprint('suggest', __name__, url_prefix='/suggest')
 
 
 @route(suggest_bp, '/', methods=['GET', 'POST'])
+@cache.cached(timeout=240)
 def suggest():
     if request.method == 'GET':
         return {"message": "suggest"}, 200
