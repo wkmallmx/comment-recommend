@@ -110,7 +110,7 @@ export const Draw_Bar_2 = () => {
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="name"/>
+                <XAxis dataKey="categories"/>
                 <YAxis/>
                 <Tooltip/>
                 <Bar dataKey="count" fill="#8884d8">
@@ -167,7 +167,7 @@ export const Draw_Bar_3 = () => {
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="name"/>
+                <XAxis dataKey="city"/>
                 <YAxis/>
                 <Tooltip/>
                 <Bar dataKey="count" fill="#8884d8">
